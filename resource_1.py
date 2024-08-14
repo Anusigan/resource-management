@@ -55,7 +55,7 @@ def add_entry(entries):
     "save_transactions()"
     print("Experiment entry added Successfully!!")
     while True:
-        op=input("Do you like to add another experiment entry? [Y/N]")
+        op=input("\nDo you like to add another experiment entry? [Y/N]: ")
         op=op.capitalize()
         if op=="Y":
             add_entry(entries)
@@ -63,7 +63,7 @@ def add_entry(entries):
         elif op=="N":
             break
         else:
-            print("Invalid option. Please enter [Y/N]!")
+            print("\nInvalid option. Please enter [Y/N]!")
             continue
 
 
