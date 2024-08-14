@@ -53,6 +53,20 @@ def add_entry(entries):
 
     # Saving the transactions to the JSON file
     "save_transactions()"
+    print("Experiment entry added Successfully!!")
+    while True:
+        op=input("Do you like to add another experiment entry? [Y/N]")
+        op=op.capitalize()
+        if op=="Y":
+            add_entry(entries)
+            break
+        elif op=="N":
+            break
+        else:
+            print("Invalid option. Please enter [Y/N]!")
+            continue
+
+
 
 
 
