@@ -46,14 +46,18 @@ def add_entry(entries):
         "e_date": e_date,
         "res": res,
         "dp": dp}
+    
     if e_name in entries:
         entries[e_name].append(entry)
     else:
         entries[e_name] = [entry]
 
     # Saving the transactions to the JSON file
-    "save_transactions()"
+    save_entries_to_file(entries,"research_data.txt")
+
     print("Experiment entry added Successfully!!")
+
+
     while True:
         op=input("\nDo you like to add another experiment entry? [Y/N]: ")
         op=op.capitalize()
@@ -97,22 +101,38 @@ def view_entries(entries):
 
 
 
-# Function to save entries to a text file
+
 def save_entries_to_file(entries, filename):
-     with open(filename, "w") as file:
-        # Write the transactions dictionary to the file using json.dump()
-        json.dump(entries, file, indent=2)
-   
+    with open(filename, "w") as file:
+        for e_name, entry_data in entries.items():
+            for entry in entry_data:
+                line = f"{e_name}|{entry['e_date']}|{entry['res']}|{entry['dp']}\n"
+                file.write(line)
+
 
 # Function to load entries from a text file
 def load_entries_from_file(filename):
-    global entries
+    entries = {}
     try:
-        with open("transactions.json", "r") as file:
-            transactions = json.load(file)
+        with open(filename, "r") as file:
+            for line in file:
+                parts = line.strip().split('|')
+                if len(parts) == 4:
+                    e_name, e_date, res, dp_str = parts
+                    dp = float(dp_str)
+                    entry = {"e_date": e_date, "res": res, "dp": dp}
+                    if e_name in entries:
+                        entries[e_name].append(entry)
+                    else:
+                        entries[e_name] = [entry]
     except FileNotFoundError:
-        transactions = {}
- 
+        pass  # File does not exist, return empty dictionary
+    except ValueError:
+        print("Error reading file. Ensure the file format is correct.")
+    return entries
+
+
+
 
 # Function to perform data analysis
 def analyze_data(entries):
@@ -125,29 +145,29 @@ def main():
 
 
 
-while True:
-    print("\nMenu:")
-    print("1. Add a research data entry")
-    print("2. View all entries")
-    print("3. Analyze data")
-    print("4. Save entries to file")
-    print("5. Exit")
-    choice = input("Enter your choice: ")
+    while True:
+        print("\nMenu:")
+        print("1. Add a research data entry")
+        print("2. View all entries")
+        print("3. Analyze data")
+        print("4. Save entries to file")
+        print("5. Exit")
+        choice = input("Enter your choice: ")
 
 
 
-    if choice == '1':
-        add_entry(entries)
-    elif choice == '2':
-        view_entries(entries)
-    elif choice == '3':
-       analyze_data(entries)
-    elif choice == '4':
-        save_entries_to_file(entries, filename)
-    elif choice == '5':
-        break
-    else:
-        print("Invalid choice, please try again.")
+        if choice == '1':
+            add_entry(entries)
+        elif choice == '2':
+            view_entries(entries)
+        elif choice == '3':
+            analyze_data(entries)
+        elif choice == '4':
+            save_entries_to_file(entries, filename)
+        elif choice == '5':
+            break
+        else:
+            print("Invalid choice, please try again.")
 
 
 
