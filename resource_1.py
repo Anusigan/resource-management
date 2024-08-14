@@ -1,6 +1,7 @@
 import os
+import json
 
-entries=[]
+entries={}
 
 # Function to add a research data entry
 def add_entry(entries):
@@ -45,9 +46,13 @@ def add_entry(entries):
         "experiment_date": e_date,
         "experiment_researcher": res,
         "data_point": dp}
-    entries.append(entry)
-    print("Experiment details added successfully!")
+    if e_name in entries:
+        entries[e_name].append(entry)
+    else:
+        entries[e_name] = [entry]
 
+    # Saving the transactions to the JSON file
+    save_transactions()
 
 
 
@@ -67,11 +72,19 @@ def view_entries(entries):
 
 # Function to save entries to a text file
 def save_entries_to_file(entries, filename):
+     with open(filename, "w") as file:
+        # Write the transactions dictionary to the file using json.dump()
+        json.dump(entries, file, indent=2)
    
 
 # Function to load entries from a text file
 def load_entries_from_file(filename):
-    hi
+    global entries
+    try:
+        with open("transactions.json", "r") as file:
+            transactions = json.load(file)
+    except FileNotFoundError:
+        transactions = {}
  
 
 # Function to perform data analysis
