@@ -65,12 +65,12 @@ def view_entries(entries):
         # Iterates all over each category and its transactions
         for e_name, entry_data in entries.items():
             # Printing the category name
-            print(f"\nExperiment Name: {e_name}")
+            print(f"\nExperiment Name: {e_name}\n")
             number=1
             # Iterating through each and every transaction in the specific category
             for entry in entry_data:
                 # Printing the transaction details
-                print(f"{number}. Experiment Date: {(entry['e_date'])}, Researcher Name: {(entry['res'])}, Data point: {entry['dp']}")
+                print(f"{number}. Experiment Date: {(entry['e_date'])}\n   Researcher Name: {(entry['res'])}\n   Data point: {entry['dp']}\n")
                 number += 1
             
     else:
