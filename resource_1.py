@@ -42,17 +42,17 @@ def add_entry(entries):
             print("\nThe data points should be a numeral value! Please enter again!")
             continue
 
-    entry= {"experiment_name": e_name,
-        "experiment_date": e_date,
-        "experiment_researcher": res,
-        "data_point": dp}
+    entry= {"e_name": e_name,
+        "e_date": e_date,
+        "res": res,
+        "dp": dp}
     if e_name in entries:
         entries[e_name].append(entry)
     else:
         entries[e_name] = [entry]
 
     # Saving the transactions to the JSON file
-    save_transactions()
+    "save_transactions()"
 
 
 
@@ -61,14 +61,27 @@ def add_entry(entries):
 
 # Function to view all research data entries
 def view_entries(entries):
-    if entries.length()>0:
-        print('-' *90)
-        print(f"{'\nExperiment Name':<25} {'Experiment Date':<25} {'Researcher Name':25} {'Data Points':<25}")
-        print('-' *90)
-        for entry in entries:
-            print(f"{entry['experiment_name']:<25} {entry['experiment_date']:<25} {entry['experiment_researcher']:<25} {entry['data_point']:<10.2f}")
+    if entries:
+        # Iterates all over each category and its transactions
+        for e_name, entry_data in entries.items():
+            # Printing the category name
+            print(f"\nExperiment Name: {e_name}")
+            number=1
+            # Iterating through each and every transaction in the specific category
+            for entry in entry_data:
+                # Printing the transaction details
+                print(f"{number}. Experiment Date: {(entry['e_date'])}, Researcher Name: {(entry['res'])}, Data point: {entry['dp']}")
+                number += 1
+            
     else:
-        print("\nNo entries to view")
+        # Printing a message if there is no transactions exists
+        print("No experiment entries available")
+
+
+
+
+
+
 
 # Function to save entries to a text file
 def save_entries_to_file(entries, filename):
