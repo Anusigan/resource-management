@@ -109,6 +109,8 @@ def save_entries_to_file(entries, filename):
                 line = f"{e_name}|{entry['e_date']}|{entry['res']}|{entry['dp']}\n"
                 file.write(line)
 
+                
+
 
 # Function to load entries from a text file
 def load_entries_from_file(filename):
@@ -126,17 +128,60 @@ def load_entries_from_file(filename):
                     else:
                         entries[e_name] = [entry]
     except FileNotFoundError:
-        pass  # File does not exist, return empty dictionary
+         print("Error reading file. Ensure the file format is correct.")
     except ValueError:
-        print("Error reading file. Ensure the file format is correct.")
+        print("Entries are not valid please recheck")
     return entries
 
 
 
 
-# Function to perform data analysis
+
 def analyze_data(entries):
-    pass
+    i=0
+    t_dp=0
+    data_points=[]
+    a_name=input("Enter the experiment name to be analysed: ")
+    if entries:
+        for e_name, entry_data in entries.items():
+            if a_name == e_name:
+                for entry in entry_data:
+                    i+=1  
+                    print("\nThe total number of tets carried out: ",i)
+                print("\nThe researchers participated in the experiment are:")
+                for entry in entry_data:
+                    count=1
+                    print(count,".",entry['res'])
+
+                for entry in entry_data:
+                    t_dp+=entry['dp']
+                print("\nAverage data point is: ",t_dp/i)
+
+                for entry in entry_data:
+                    i += 1 
+                    data_points.append(entry['dp'])
+                data_points.sort()
+                if i % 2 != 0:
+                    m_dp = data_points[i // 2]  
+                else:
+                    m_dp = (data_points[i // 2 - 1] + data_points[i // 2]) / 2  
+                print("\nMedian data point is: ",m_dp)
+    else:
+        print("No entries available to analyze")
+
+                
+                
+       
+
+
+           
+                 
+                 
+   
+
+
+
+
 # Main function to interact with the user
 def main():
     filename = "research_data.txt"
