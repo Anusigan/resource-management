@@ -100,8 +100,29 @@ class ResearchDataManager:
                     file.write(line)
     
         
-    def load_entries_from_file(self):
-        pass
+    def load_entries_from_file(self,filename):
+        entries = {}
+        try:
+            with open(filename, "r") as file:
+                for line in file:
+                    parts = line.strip().split('|')
+                    if len(parts) == 4:
+                        e_name, e_date, res, dp_str = parts
+                        dp = float(dp_str)
+                        entry = {"e_date": e_date, "res": res, "dp": dp}
+                        if e_name in entries:
+                            entries[e_name].append(entry)
+                        else:
+                            entries[e_name] = [entry]
+        except FileNotFoundError:
+            print("Error reading file. Ensure the file format is correct.")
+        except ValueError:
+            print("Entries are not valid please recheck")
+            return entries
+    
+
+
+    
     def analyze_data(self):
         pass
     def main():
