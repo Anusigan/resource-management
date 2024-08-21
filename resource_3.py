@@ -1,26 +1,45 @@
 import avro.schema
 import avro.io
-import io
 import os
+import io
+
 
 class ResearchDataManager:
     def __init__(self):
         self.entries = {}
         self.filename = "research_data.avro"
         schema_file = "research_data_schema.avsc"
-        
-        # Check if schema file exists
-        if not os.path.exists(schema_file):
-            raise FileNotFoundError(f"Schema file '{schema_file}' is missing.")
-        
-        # Load the schema
+
+        # Attempt to load the schema file with error handling
         try:
+            if not os.path.exists(schema_file):
+                raise FileNotFoundError(f"Schema file '{schema_file}' not found.")
+            
             with open(schema_file, "r") as file:
                 self.schema = avro.schema.Parse(file.read())
+            print(f"Schema '{schema_file}' loaded successfully.")
+            
+        except FileNotFoundError as e:
+            print(e)
+            # Provide a correctly formatted JSON as a fallback
+            schema_json = '''
+            {
+                "type": "record",
+                "name": "Experiment",
+                "fields": [
+                    {"name": "e_name", "type": "string"},
+                    {"name": "e_date", "type": "string"},
+                    {"name": "res", "type": "string"},
+                    {"name": "dp", "type": "float"}
+                ]
+            }
+            '''
+            self.schema = avro.schema.Parse(schema_json)
+            print("Using placeholder schema instead.")
+        
         except Exception as e:
             print(f"An error occurred while loading the schema: {e}")
             raise
-
     def add_entry(self):
         while True:
             e_name = input("\nEnter the experiment name: ")
