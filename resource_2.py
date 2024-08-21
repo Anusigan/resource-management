@@ -72,7 +72,7 @@ class ResearchDataManager:
 
 
 
-    def view_entries(self):
+    def view_entries(self,entries):
         if entries:
         # Iterates all over each category and its transactions
             for e_name, entry_data in entries.items():
@@ -89,8 +89,17 @@ class ResearchDataManager:
             # Printing a message if there is no transactions exists
             print("No experiment entries available")
 
-    def save_entries_to_file(self):
-        pass
+
+
+
+    def save_entries_to_file(self,filename):
+        with open(filename, "w") as file:
+            for e_name, entry_data in entries.items():
+                for entry in entry_data:
+                    line = f"{e_name}|{entry['e_date']}|{entry['res']}|{entry['dp']}\n"
+                    file.write(line)
+    
+        
     def load_entries_from_file(self):
         pass
     def analyze_data(self):
