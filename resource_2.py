@@ -96,7 +96,7 @@ class ResearchDataManager:
             print("Error in file format. Please check the file contents.")
 
     def analyze_data(self):
-        a_name = input("Enter the experiment name to be analyzed: ")
+        a_name = input("\nEnter the experiment name to be analyzed: ")
         if a_name in self.entries:
             entry_data = self.entries[a_name]
             i = len(entry_data)
@@ -114,7 +114,7 @@ class ResearchDataManager:
                 m_dp = data_points[i // 2]
             else:
                 m_dp = (data_points[i // 2 - 1] + data_points[i // 2]) / 2
-            print(f"\nMedian data point is: {m_dp:.2f}")
+            print(f"Median data point is: {m_dp:.2f}")
         else:
             print("No entries available for the given experiment name.")
 
